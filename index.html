@@ -226,9 +226,9 @@
           <a href="#" style="color: #fff; font-size: 12px; font-weight: 800; border: 1.5px solid rgba(255,255,255,.6); padding: 5px 12px; border-radius: 5px; white-space: nowrap">Ver tudo</a>
         </div>
       </div>
-      <div class="no-scrollbar" style="background: #fff; padding: 12px; display: flex; gap: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch">
-        <sc-for list="{{ ofertas }}" as="o" hint-placeholder-count="6">
-          <div style="flex: 0 0 auto; width: 155px; cursor: pointer">
+      <div class="no-scrollbar" style="background: #fff; padding: 14px; display: flex; gap: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch">
+        <sc-for list="{{ ofertas }}" as="o" hint-placeholder-count="12">
+          <div style="flex: 0 0 auto; width: 155px; cursor: pointer; transition: transform .18s" style-hover="transform:translateY(-2px)">
             <div style="position: relative; height: 155px; border-radius: 8px; background: #F4F6F8; display: flex; align-items: center; justify-content: center; overflow: hidden">
               <img src="{{ o.foto }}" alt="{{ o.tag }}" style="width: 100%; height: 100%; object-fit: cover" />
               <span style="position: absolute; top: 0; left: 0; background: #E03131; color: #fff; font-weight: 900; font-size: 12px; padding: 3px 8px; border-bottom-right-radius: 8px">-{{ o.desc }}%</span>
@@ -261,7 +261,7 @@
 
     <div class="cb-product-grid">
       <sc-for list="{{ produtos }}" as="p" hint-placeholder-count="12">
-        <div style="background: #fff; border: 1px solid #E3E7EA; border-radius: 9px; overflow: hidden; cursor: pointer; transition: all .16s; display: flex; flex-direction: column" style-hover="border-color:#0A8A4B;box-shadow:0 6px 18px rgba(16,32,42,.13);transform:translateY(-3px)">
+        <a href="./produto.html" style="background: #fff; border: 1px solid #E3E7EA; border-radius: 9px; overflow: hidden; cursor: pointer; transition: all .16s; display: flex; flex-direction: column; text-decoration: none; color: inherit" style-hover="border-color:#0A8A4B;box-shadow:0 6px 18px rgba(16,32,42,.13);transform:translateY(-3px)">
           <div style="position: relative; aspect-ratio: 1 / 1; background: #F4F6F8; display: flex; align-items: center; justify-content: center; overflow: hidden">
             <img src="{{ p.foto }}" alt="{{ p.nome }}" style="width: 100%; height: 100%; object-fit: cover" />
             <span style="position: absolute; top: 0; left: 0; background: {{ p.badgeBg }}; color: {{ p.badgeFg }}; font-weight: 900; font-size: 12.5px; padding: 4px 8px; border-bottom-right-radius: 8px">-{{ p.desc }}%</span>
@@ -288,7 +288,7 @@
               <span style="font-size: 11.5px; color: #6B7883; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ p.loja }}</span>
             </div>
           </div>
-        </div>
+        </a>
       </sc-for>
     </div>
 
@@ -315,7 +315,7 @@
       <div>
         <div style="font-size: 12px; font-weight: 800; color: #fff; letter-spacing: 1px; margin-bottom: 11px">PARA LOJISTAS</div>
         <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12.5px">
-          <a href="#" style="color:#C3CDD6">Venda no Compras Bras</a><a href="#" style="color:#C3CDD6">Painel do lojista</a><a href="#" style="color:#C3CDD6">Tabela de comissões</a><a href="#" style="color:#C3CDD6">Logística consolidada</a>
+          <a href="#" style="color:#C3CDD6">Venda no Compras Bras</a><a href="./lojista-painel.html" style="color:#C3CDD6">Painel do lojista</a><a href="#" style="color:#C3CDD6">Tabela de comissões</a><a href="#" style="color:#C3CDD6">Logística consolidada</a>
         </div>
       </div>
       <div>
@@ -345,12 +345,12 @@
 <!-- Prototype Navigation Bar -->
 <div class="no-scrollbar" style="position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 9999; background: rgba(20, 33, 46, 0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 30px; padding: 6px 10px; display: flex; align-items: center; gap: 6px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); max-width: calc(100vw - 20px); overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch">
   <div style="font-size: 10px; font-weight: 900; color: #FFD54A; padding: 0 8px; letter-spacing: 0.8px; white-space: nowrap">PROTÓTIPO</div>
-  <a href="./Compras Bras Home.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #0A8A4B; color: #fff; white-space: nowrap">🏠 Home</a>
-  <a href="./Compras Bras PDP.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🛍️ PDP Produto</a>
-  <a href="./Compras Bras Admin Pedidos.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🏢 Admin: Pedidos</a>
-  <a href="./Compras Bras Admin Detalhe Pedido.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">📄 Admin: Detalhe</a>
-  <a href="./Compras Bras Painel Lojista.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🏪 Lojista: Painel</a>
-  <a href="./Compras Bras Lojista Detalhe Pedido.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">📦 Lojista: Detalhe</a>
+  <a href="./index.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #0A8A4B; color: #fff; white-space: nowrap">🏠 Home</a>
+  <a href="./produto.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🛍️ PDP Produto</a>
+  <a href="./admin-pedidos.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🏢 Admin: Pedidos</a>
+  <a href="./admin-detalhe-pedido.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">📄 Admin: Detalhe</a>
+  <a href="./lojista-painel.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🏪 Lojista: Painel</a>
+  <a href="./lojista-detalhe-pedido.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">📦 Lojista: Detalhe</a>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;colunas&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;min&quot;:3,&quot;max&quot;:6,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Grid&quot;},&quot;mostrarFrete&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Grid&quot;},&quot;autoplay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Banner&quot;}}">
@@ -429,7 +429,13 @@ class Component extends DCLogic {
       ['R$ 79,90', 'R$ 159,90', 50, 45, '128 vendidos', './images/bolsa_transversal.jpg', 'Bolsa Couro'],
       ['R$ 89,90', 'R$ 189,90', 53, 66, '204 vendidos', './images/jogo_lencol.jpg', 'Jogo de Lençol'],
       ['R$ 42,90', 'R$ 89,90', 52, 88, '473 vendidos', './images/sandalia_rasteira.jpg', 'Sandália Rasteira'],
-      ['R$ 39,90', 'R$ 99,90', 60, 33, '96 vendidos', './images/brinco_colar.jpg', 'Conjunto Ouro 18k']
+      ['R$ 39,90', 'R$ 99,90', 60, 33, '96 vendidos', './images/brinco_colar.jpg', 'Conjunto Ouro 18k'],
+      ['R$ 49,90', 'R$ 89,90', 44, 82, '610 vendidos', './images/kit_body.jpg', 'Kit 3 Body Bebê'],
+      ['R$ 74,90', 'R$ 139,90', 46, 75, '388 vendidos', './images/camisa_social.jpg', 'Camisa Slim Fit'],
+      ['R$ 34,90', 'R$ 79,90', 56, 94, '820 vendidos', './images/organizador_caixas.jpg', 'Caixas Organizadoras'],
+      ['R$ 89,90', 'R$ 169,90', 47, 60, '195 vendidos', './images/calca_wide_leg.jpg', 'Calça Wide Leg'],
+      ['R$ 54,90', 'R$ 109,90', 50, 71, '430 vendidos', './images/toalha_banho.jpg', 'Toalha de Banho'],
+      ['R$ 109,90', 'R$ 199,90', 45, 85, '270 vendidos', './images/mochila_escolar.jpg', 'Mochila Notebook']
     ];
     const ofertas = ofertasRaw.map(o => ({
       preco: o[0], de: o[1], desc: o[2], barra: o[3] + '%', vendidos: o[4],
