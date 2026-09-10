@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding-bottom: 72px; background: #F1F3F5; font-family: Archivo, system-ui, sans-serif; color: #16202A; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: #0B5CAD; text-decoration: none; }
+  a:hover { color: #0A8A4B; }
+  ::-webkit-scrollbar { height: 6px; width: 6px; }
+  ::-webkit-scrollbar-thumb { background: #C7CDD3; border-radius: 8px; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  @keyframes cb-pulse { 0%,100% { opacity: 1 } 50% { opacity: .55 } }
+
+  .cb-header-row { display: flex; align-items: center; gap: 20px; padding: 12px 20px; }
+  .cb-logo-col { display: flex; align-items: center; gap: 9px; flex: 0 0 auto; cursor: pointer; }
+  .cb-search-col { flex: 1 1 420px; min-width: 0; }
+  .cb-header-actions { flex: 0 0 auto; margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  
+  .cb-pdp-layout { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; max-width: 1360px; margin: 0 auto; padding: 12px 20px 0; }
+  .cb-gallery-col { flex: 1 1 340px; max-width: 440px; background: #fff; border: 1px solid #E3E7EA; border-radius: 10px; padding: 14px; }
+  .cb-details-col { flex: 3 1 360px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
+  @media (max-width: 768px) {
+    .cb-header-row { padding: 10px 14px !important; flex-wrap: wrap !important; gap: 10px !important; }
+    .cb-logo-col { order: 1 !important; }
+    .cb-header-actions { order: 2 !important; margin-left: auto !important; gap: 4px !important; }
+    .cb-action-btn { padding: 6px 8px !important; }
+    .cb-action-label { display: none !important; }
+    .cb-search-col { order: 3 !important; flex: 1 1 100% !important; width: 100% !important; min-width: 100% !important; margin-top: 2px !important; }
+    
+    .cb-pdp-layout { padding: 10px 12px 0 !important; gap: 12px !important; }
+    .cb-gallery-col { max-width: 100% !important; flex: 1 1 100% !important; }
+    .cb-details-col { flex: 1 1 100% !important; }
+  }
+
+  @media (max-width: 480px) {
+    .cb-logo-tagline { display: none !important; }
+  }
+</style>
+</helmet>
+
+<div style="min-width: 0; background: #F1F3F5">
+
+  <!-- Main Header -->
+  <div style="position: sticky; top: 0; z-index: 40; background: linear-gradient(90deg, #0A7A44 0%, #0A8A4B 45%, #0B5CAD 100%); box-shadow: 0 2px 10px rgba(11,40,25,.22)">
+    <div class="cb-header-row" style="max-width: 1360px; margin: 0 auto">
+      <div class="cb-logo-col">
+        <div style="width: 38px; height: 38px; border-radius: 9px; background: linear-gradient(150deg, #FFD54A, #F2A50C); display: grid; place-items: center; font-weight: 900; font-size: 19px; color: #0A5C36; box-shadow: 0 2px 0 rgba(0,0,0,.18); flex-shrink: 0">CB</div>
+        <div style="line-height: 1">
+          <div style="font-weight: 900; font-size: 21px; color: #fff; letter-spacing: -.4px; white-space: nowrap">Compras Bras</div>
+          <div class="cb-logo-tagline" style="font-size: 10.5px; font-weight: 600; color: #FFE08A; letter-spacing: .8px; margin-top: 3px">MARKETPLACE DO POLO</div>
+        </div>
+      </div>
+      <div class="cb-search-col">
+        <div style="display: flex; background: #fff; border-radius: 8px; overflow: hidden; border: 2.5px solid #FFC107; box-shadow: 0 2px 8px rgba(0,0,0,0.08)">
+          <input placeholder="Buscar vestido, calçado, infantil, cama mesa..." style="flex: 1 1 auto; min-width: 0; border: 0; outline: none; padding: 10px 14px; font-family: Archivo, sans-serif; font-size: 14px; color: #16202A" />
+          <button style="flex: 0 0 auto; border: 0; background: #FFC107; color: #16202A; font-family: Archivo, sans-serif; font-weight: 800; font-size: 14px; padding: 0 18px; cursor: pointer; display: flex; align-items: center; gap: 6px" style-hover="background:#FFD54A">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+            <span class="cb-action-label">Buscar</span>
+          </button>
+        </div>
+      </div>
+      <div class="cb-header-actions">
+        <div class="cb-action-btn" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: #fff" style-hover="background:rgba(255,255,255,.14)">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"></path></svg>
+          <div class="cb-action-label" style="line-height: 1.25">
+            <div style="font-size: 10.5px; opacity: .8">Olá,</div>
+            <div style="font-size: 13px; font-weight: 700; white-space: nowrap">Minha conta</div>
+          </div>
+        </div>
+        <div class="cb-action-btn" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: #fff" style-hover="background:rgba(255,255,255,.14)">
+          <span style="position: relative; display: grid; place-items: center; flex: 0 0 auto">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2.2l2.2 11.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.55L21 8H6.2"></path><circle cx="10" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle></svg>
+            <span style="position: absolute; top: -7px; right: -9px; min-width: 19px; height: 19px; padding: 0 5px; border-radius: 10px; background: #E03131; color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; border: 2px solid #0A8A4B">3</span>
+          </span>
+          <div class="cb-action-label" style="line-height: 1.25">
+            <div style="font-size: 10.5px; opacity: .8">Meu</div>
+            <div style="font-size: 13px; font-weight: 700">Carrinho</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Bar -->
+    <div style="background: rgba(0,0,0,.18); border-top: 1px solid rgba(255,255,255,0.08)">
+      <div class="no-scrollbar" style="max-width: 1360px; margin: 0 auto; padding: 0 14px; display: flex; gap: 2px; overflow-x: auto; -webkit-overflow-scrolling: touch">
+        <sc-for list="{{ categorias }}" as="cat" hint-placeholder-count="8">
+          <div style="flex: 0 0 auto; padding: 9px 13px; font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; cursor: pointer; border-bottom: 3px solid transparent" style-hover="background:rgba(255,255,255,.13);border-bottom-color:#FFC107">{{ cat }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-scrollbar" style="max-width: 1360px; margin: 0 auto; padding: 10px 14px 0; display: flex; align-items: center; gap: 7px; font-size: 12px; color: #6B7883; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch">
+    <a href="./Compras Bras Home.dc.html">Início</a><span>›</span><a href="#">Moda Feminina</a><span>›</span><a href="#">Vestidos</a><span>›</span><span style="color: #16202A; font-weight: 600">Vestido midi canelado</span>
+  </div>
+
+  <div class="cb-pdp-layout">
+
+    <div class="cb-gallery-col">
+      <div style="position: relative; aspect-ratio: 1 / 1; border-radius: 8px; background: #F4F6F8; display: flex; align-items: center; justify-content: center; overflow: hidden">
+        <img src="{{ fotoAtiva }}" alt="Vestido midi" style="width: 100%; height: 100%; object-fit: cover" />
+        <span style="position: absolute; top: 0; left: 0; background: #E03131; color: #fff; font-weight: 900; font-size: 15px; padding: 6px 12px; border-bottom-right-radius: 10px">-46%</span>
+        <span style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,.55); color: #fff; font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 20px">{{ contadorFoto }}</span>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 4px">
+        <sc-for list="{{ miniaturas }}" as="m" hint-placeholder-count="5">
+          <div onClick="{{ m.go }}" style="flex: 0 0 auto; width: 68px; height: 68px; border-radius: 7px; background: #F4F6F8; cursor: pointer; border: 3px solid {{ m.borda }}; overflow: hidden; display: flex; align-items: center; justify-content: center">
+            <img src="{{ m.foto }}" alt="Miniatura" style="width: 100%; height: 100%; object-fit: cover" />
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 14px; margin-top: 14px; padding-top: 13px; border-top: 1px solid #F0F2F4; font-size: 12px; color: #55636E; font-weight: 600; flex-wrap: wrap">
+        <span style="display: inline-flex; align-items: center; gap: 5px">🛡 Compra garantida</span>
+        <span style="display: inline-flex; align-items: center; gap: 5px">↩ Troca em 7 dias</span>
+        <span style="display: inline-flex; align-items: center; gap: 5px">✓ Lojista verificado</span>
+      </div>
+    </div>
+
+    <div style="flex: 3 1 360px; display: flex; flex-direction: column; gap: 12px; min-width: 0">
+
+      <div style="background: #fff; border: 1px solid #E3E7EA; border-radius: 10px; padding: 18px 20px">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 9px; flex-wrap: wrap">
+          <span style="background: #FFF4D1; color: #8A5B00; font-size: 11px; font-weight: 900; letter-spacing: .6px; padding: 4px 9px; border-radius: 4px">MAIS VENDIDO EM VESTIDOS</span>
+          <span style="background: #EAF7F0; color: #0A6E3C; font-size: 11px; font-weight: 800; padding: 4px 9px; border-radius: 4px">Vendido por 5 lojistas do polo</span>
+        </div>
+        <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -.7px; line-height: 1.22; text-wrap: pretty">Vestido midi canelado manga bufante — cores lisas, tecido com elastano</h1>
+        <div style="display: flex; align-items: center; gap: 12px; margin-top: 11px; flex-wrap: wrap">
+          <span style="font-size: 15px; color: #F2A50C; letter-spacing: 1.5px">★★★★★</span>
+          <span style="font-weight: 800; font-size: 14px">4.8</span>
+          <a href="#" style="font-size: 13px; font-weight: 600">2.417 avaliações</a>
+          <span style="color: #C7CDD3">|</span>
+          <span style="font-size: 13px; color: #6B7883; font-weight: 600">8.930 vendidos</span>
+          <span style="color: #C7CDD3">|</span>
+          <span style="font-size: 13px; color: #6B7883; font-weight: 600">Cód. 774-2291</span>
+        </div>
+
+        <div style="margin-top: 16px; background: linear-gradient(100deg, #FFF9E8, #FFFDF7); border: 1px solid #F5E2A8; border-radius: 9px; padding: 15px 17px">
+          <div style="display: flex; align-items: baseline; gap: 11px; flex-wrap: wrap">
+            <span style="font-size: 14.5px; color: #8A959E; text-decoration: line-through">R$ 129,90</span>
+            <span style="background: #E03131; color: #fff; font-weight: 900; font-size: 13px; padding: 3px 9px; border-radius: 4px">-46% OFF</span>
+            <span style="background: #FFC107; color: #16202A; font-weight: 900; font-size: 12px; padding: 3px 9px; border-radius: 4px">ECONOMIZE R$ 60,00</span>
+          </div>
+          <div style="display: flex; align-items: baseline; gap: 12px; margin-top: 6px; flex-wrap: wrap">
+            <span style="font-weight: 900; font-size: 44px; color: #E03131; letter-spacing: -1.6px; line-height: 1">R$ 69,90</span>
+            <span style="font-size: 13.5px; font-weight: 700; color: #0A6E3C">no PIX · R$ 74,90 em 12x s/ juros de R$ 6,24</span>
+          </div>
+          <div style="font-size: 12.5px; color: #8A5B00; font-weight: 700; margin-top: 8px">A partir de 6 peças: R$ 54,90 cada (preço de atacado)</div>
+        </div>
+
+        <div style="margin-top: 17px; display: flex; flex-direction: column; gap: 13px">
+          <div>
+            <div style="font-size: 12.5px; font-weight: 800; color: #4A5862; margin-bottom: 7px">Cor: <span style="color: #16202A">{{ corAtiva }}</span></div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{ cores }}" as="c" hint-placeholder-count="5">
+                <div onClick="{{ c.go }}" style="display: flex; align-items: center; gap: 7px; padding: 5px 11px 5px 6px; border-radius: 6px; border: 2px solid {{ c.borda }}; background: {{ c.bg }}; cursor: pointer">
+                  <span style="width: 20px; height: 20px; border-radius: 4px; background: {{ c.swatch }}; border: 1px solid rgba(0,0,0,.12)"></span>
+                  <span style="font-size: 12.5px; font-weight: 700; color: {{ c.fg }}">{{ c.nome }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 7px">
+              <div style="font-size: 12.5px; font-weight: 800; color: #4A5862">Tamanho: <span style="color: #16202A">{{ tamAtivo }}</span></div>
+              <a href="#" style="font-size: 12px; font-weight: 700">Tabela de medidas</a>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{ tamanhos }}" as="t" hint-placeholder-count="5">
+                <div onClick="{{ t.go }}" style="min-width: 52px; text-align: center; padding: 9px 14px; border-radius: 6px; border: 2px solid {{ t.borda }}; background: {{ t.bg }}; color: {{ t.fg }}; font-size: 13.5px; font-weight: 800; cursor: {{ t.cursor }}; text-decoration: {{ t.risco }}">{{ t.nome }}</div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #fff; border: 2px solid #0A8A4B; border-radius: 10px; overflow: hidden">
+        <div style="background: #EAF7F0; padding: 9px 18px; display: flex; align-items: center; gap: 9px; border-bottom: 1px solid #CBE9D9; flex-wrap: wrap">
+          <span style="font-size: 12px; font-weight: 900; color: #0A6E3C; letter-spacing: .8px">OFERTA SELECIONADA</span>
+          <span style="background: #0A8A4B; color: #fff; font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 20px">MENOR PREÇO</span>
+          <span style="font-size: 11.5px; color: #0A6E3C; font-weight: 600; margin-left: auto">Escolhida entre 5 lojistas por preço e avaliação</span>
+        </div>
+        <div style="padding: 17px 18px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center">
+          <div style="flex: 1 1 320px; min-width: 0">
+            <div style="display: flex; align-items: center; gap: 11px">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: {{ ofertaSel.bg }}; color: #fff; font-weight: 900; font-size: 15px; display: grid; place-items: center; flex: 0 0 auto">{{ ofertaSel.ini }}</div>
+              <div style="min-width: 0">
+                <div style="font-weight: 800; font-size: 16px; letter-spacing: -.3px">{{ ofertaSel.loja }}</div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px; flex-wrap: wrap">
+                  <span style="font-size: 12px; color: #F2A50C; letter-spacing: 1px">★★★★★</span>
+                  <span style="font-size: 12px; font-weight: 800">{{ ofertaSel.nota }}</span>
+                  <span style="font-size: 12px; color: #6B7883; font-weight: 600">{{ ofertaSel.vendas }}</span>
+                  <span style="background: #E7F0FA; color: #0B5CAD; font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: 3px">LOJA OFICIAL DO POLO</span>
+                </div>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 10px; margin-top: 14px">
+              <div style="background: #F7F9FA; border-radius: 7px; padding: 10px 12px">
+                <div style="font-size: 10.5px; font-weight: 800; color: #6B7883; letter-spacing: .5px">ENTREGA ESTIMADA</div>
+                <div style="font-size: 13.5px; font-weight: 800; margin-top: 3px">{{ ofertaSel.prazo }}</div>
+                <div style="font-size: 11.5px; color: #6B7883; margin-top: 1px">Para o CEP 01120-000</div>
+              </div>
+              <div style="background: #EAF7F0; border-radius: 7px; padding: 10px 12px">
+                <div style="font-size: 10.5px; font-weight: 800; color: #0A6E3C; letter-spacing: .5px">FRETE</div>
+                <div style="font-size: 13.5px; font-weight: 900; color: #0A6E3C; margin-top: 3px">{{ ofertaSel.frete }}</div>
+                <div style="font-size: 11.5px; color: #0A6E3C; margin-top: 1px">Acima de R$ 99 na loja</div>
+              </div>
+              <div style="background: #F7F9FA; border-radius: 7px; padding: 10px 12px">
+                <div style="font-size: 10.5px; font-weight: 800; color: #6B7883; letter-spacing: .5px">ESTOQUE</div>
+                <div style="font-size: 13.5px; font-weight: 800; margin-top: 3px">{{ ofertaSel.estoque }}</div>
+                <div style="font-size: 11.5px; color: #C21F1F; font-weight: 700; margin-top: 1px; animation: cb-pulse 1.8s infinite">Alta procura hoje</div>
+              </div>
+            </div>
+          </div>
+          <div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 9px">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+              <span style="font-size: 12.5px; font-weight: 800; color: #4A5862">Qtd.</span>
+              <div style="display: flex; align-items: center; border: 1px solid #DDE2E6; border-radius: 6px; overflow: hidden">
+                <div onClick="{{ menos }}" style="width: 34px; height: 34px; display: grid; place-items: center; cursor: pointer; font-weight: 900; color: #4A5862" style-hover="background:#F1F3F5">−</div>
+                <div style="width: 42px; text-align: center; font-weight: 800; font-size: 14px">{{ qtd }}</div>
+                <div onClick="{{ mais }}" style="width: 34px; height: 34px; display: grid; place-items: center; cursor: pointer; font-weight: 900; color: #4A5862" style-hover="background:#F1F3F5">+</div>
+              </div>
+              <span style="font-size: 11.5px; color: #6B7883; font-weight: 600">{{ qtdNota }}</span>
+            </div>
+            <button style="border: 0; background: #FFC107; color: #16202A; font-family: Archivo, sans-serif; font-weight: 900; font-size: 16px; padding: 15px; border-radius: 7px; cursor: pointer; box-shadow: 0 3px 0 #C98A00" style-hover="background:#FFD54A">Comprar agora</button>
+            <button style="border: 2px solid #0A8A4B; background: #fff; color: #0A8A4B; font-family: Archivo, sans-serif; font-weight: 800; font-size: 15px; padding: 12px; border-radius: 7px; cursor: pointer" style-hover="background:#EAF7F0">Adicionar ao carrinho</button>
+            <div style="display: flex; justify-content: center; gap: 16px; font-size: 12px; font-weight: 700; color: #6B7883">
+              <span style="cursor: pointer">♡ Favoritar</span><span style="cursor: pointer">⇄ Comparar</span>
+            </div>
+          </div>
+        </div>
+
+        <div onClick="{{ toggleOfertas }}" style="border-top: 1px solid #E3E7EA; background: #F7F9FA; padding: 12px 18px; display: flex; align-items: center; gap: 9px; cursor: pointer; flex-wrap: wrap" style-hover="background:#EFF3F5">
+          <span style="font-size: 13.5px; font-weight: 800; color: #0B5CAD">{{ labelOfertas }}</span>
+          <span style="font-size: 12.5px; color: #6B7883; font-weight: 600">a partir de R$ 71,50 · outros lojistas do polo</span>
+          <span style="margin-left: auto; font-weight: 900; color: #0B5CAD; font-size: 13px">{{ setaOfertas }}</span>
+        </div>
+
+        <sc-if value="{{ abertoOfertas }}" hint-placeholder-val="{{ false }}">
+          <div style="border-top: 1px solid #E3E7EA">
+            <sc-for list="{{ outrasOfertas }}" as="o" hint-placeholder-count="4">
+              <div style="padding: 13px 18px; border-bottom: 1px solid #F0F2F4; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 16px; align-items: center" style-hover="background:#FAFBFC">
+                <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+                  <div style="width: 34px; height: 34px; border-radius: 50%; background: {{ o.bg }}; color: #fff; font-weight: 900; font-size: 12px; display: grid; place-items: center; flex: 0 0 auto">{{ o.ini }}</div>
+                  <div style="min-width: 0">
+                    <div style="font-weight: 700; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ o.loja }}</div>
+                    <div style="font-size: 11.5px; color: #6B7883; font-weight: 600">★ {{ o.nota }} · {{ o.vendas }} · {{ o.prazo }}</div>
+                  </div>
+                </div>
+                <div style="text-align: right">
+                  <div style="font-weight: 900; font-size: 18px; color: #16202A; letter-spacing: -.5px">{{ o.preco }}</div>
+                  <div style="font-size: 11.5px; font-weight: 700; color: {{ o.freteCor }}">{{ o.frete }}</div>
+                </div>
+                <button style="border: 1px solid #0B5CAD; background: #fff; color: #0B5CAD; font-family: Archivo, sans-serif; font-weight: 800; font-size: 12.5px; padding: 9px 15px; border-radius: 6px; cursor: pointer; white-space: nowrap" style-hover="background:#0B5CAD;color:#fff">Selecionar este vendedor</button>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width: 1360px; margin: 0 auto; padding: 16px 20px 0">
+    <div style="background: #fff; border: 1px solid #E3E7EA; border-radius: 10px; overflow: hidden">
+      <div style="display: flex; border-bottom: 1px solid #E3E7EA; overflow-x: auto">
+        <sc-for list="{{ abas }}" as="a" hint-placeholder-count="3">
+          <div onClick="{{ a.go }}" style="flex: 0 0 auto; padding: 14px 26px; font-size: 14.5px; font-weight: 800; color: {{ a.fg }}; border-bottom: 3px solid {{ a.borda }}; background: {{ a.bg }}; cursor: pointer; white-space: nowrap">{{ a.label }}</div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ abaDescricao }}" hint-placeholder-val="{{ true }}">
+        <div style="padding: 22px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px">
+          <div style="font-size: 14.5px; line-height: 1.72; color: #37454F; max-width: 720px">
+            <p style="margin: 0 0 14px">Vestido midi em tecido canelado com elastano, modelagem justa ao corpo e manga bufante com punho elástico. O comprimento midi cai abaixo do joelho e o decote redondo tem acabamento em ribana da mesma malha.</p>
+            <p style="margin: 0 0 14px">Peça produzida por confecções do polo do Brás, com costura reforçada nas laterais e barra dupla. O canelado com elastano acompanha o corpo sem marcar, o que torna o vestido adequado tanto para o dia a dia quanto para eventos.</p>
+            <p style="margin: 0 0 14px">Disponível em cinco cores lisas e cinco tamanhos. Lavagem à mão ou máquina em ciclo delicado, sem alvejante, secagem à sombra.</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px">
+              <sc-for list="{{ selosDesc }}" as="s" hint-placeholder-count="4">
+                <span style="background: #F7F9FA; border: 1px solid #E3E7EA; border-radius: 20px; padding: 6px 13px; font-size: 12.5px; font-weight: 700; color: #4A5862">{{ s }}</span>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background: #F7F9FA; border-radius: 9px; padding: 16px 18px; align-self: start">
+            <div style="font-size: 12px; font-weight: 900; letter-spacing: .8px; color: #0A6E3C; margin-bottom: 11px">DESTAQUES</div>
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <sc-for list="{{ destaques }}" as="d" hint-placeholder-count="4">
+                <div style="display: flex; gap: 9px; font-size: 13px; line-height: 1.5; color: #37454F">
+                  <span style="color: #0A8A4B; font-weight: 900; flex: 0 0 auto">✓</span><span>{{ d }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ abaSpecs }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 22px 24px">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 0 34px; max-width: 1000px">
+            <sc-for list="{{ specs }}" as="s" hint-placeholder-count="10">
+              <div style="display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 14px; padding: 10px 0; border-bottom: 1px solid #F0F2F4">
+                <span style="font-size: 13px; font-weight: 700; color: #6B7883">{{ s.k }}</span>
+                <span style="font-size: 13px; font-weight: 600; color: #16202A">{{ s.v }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ abaAvaliacoes }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 22px 24px">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; align-items: start">
+            <div>
+              <div style="background: #EAF7F0; border-radius: 9px; padding: 18px; text-align: center">
+                <div style="font-weight: 900; font-size: 48px; color: #0A6E3C; letter-spacing: -2px; line-height: 1">4.8</div>
+                <div style="font-size: 17px; color: #F2A50C; letter-spacing: 2px; margin-top: 5px">★★★★★</div>
+                <div style="font-size: 12.5px; color: #0A6E3C; font-weight: 700; margin-top: 6px">2.417 avaliações verificadas</div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 14px">
+                <sc-for list="{{ distribuicao }}" as="d" hint-placeholder-count="5">
+                  <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr) 44px; gap: 9px; align-items: center">
+                    <span style="font-size: 12px; font-weight: 700; color: #6B7883">{{ d.estrelas }}★</span>
+                    <div style="height: 8px; border-radius: 5px; background: #EDF0F2; overflow: hidden">
+                      <div style="height: 100%; width: {{ d.pct }}; background: #F2A50C"></div>
+                    </div>
+                    <span style="font-size: 11.5px; font-weight: 700; color: #6B7883; text-align: right">{{ d.qtd }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="margin-top: 14px; padding-top: 13px; border-top: 1px solid #F0F2F4">
+                <div style="font-size: 12px; font-weight: 900; color: #4A5862; letter-spacing: .5px; margin-bottom: 9px">FOTOS DOS COMPRADORES</div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px">
+                  <sc-for list="{{ fotosCompradores }}" as="f" hint-placeholder-count="8">
+                    <div style="aspect-ratio: 1/1; border-radius: 5px; background: #F4F6F8; overflow: hidden; cursor: pointer">
+                      <img src="{{ f }}" alt="Foto comprador" style="width: 100%; height: 100%; object-fit: cover" />
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0">
+              <div style="display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 16px">
+                <sc-for list="{{ tagsAval }}" as="t" hint-placeholder-count="5">
+                  <span style="background: #F7F9FA; border: 1px solid #E3E7EA; border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 700; color: #4A5862; cursor: pointer" style-hover="border-color:#0A8A4B;color:#0A6E3C">{{ t }}</span>
+                </sc-for>
+              </div>
+              <sc-for list="{{ avaliacoes }}" as="a" hint-placeholder-count="4">
+                <div style="padding: 15px 0; border-top: 1px solid #F0F2F4">
+                  <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+                    <div style="width: 34px; height: 34px; border-radius: 50%; background: {{ a.bg }}; color: #fff; font-weight: 900; font-size: 12px; display: grid; place-items: center">{{ a.ini }}</div>
+                    <div>
+                      <div style="font-size: 13.5px; font-weight: 700">{{ a.nome }}</div>
+                      <div style="font-size: 11.5px; color: #6B7883; font-weight: 600">{{ a.data }} · comprou de {{ a.loja }}</div>
+                    </div>
+                    <span style="margin-left: auto; font-size: 13px; color: #F2A50C; letter-spacing: 1.2px">{{ a.estrelas }}</span>
+                  </div>
+                  <div style="font-size: 12px; color: #6B7883; font-weight: 700; margin-top: 9px">Tamanho: {{ a.variacao }}</div>
+                  <div style="font-size: 14px; line-height: 1.62; color: #37454F; margin-top: 5px; max-width: 760px">{{ a.texto }}</div>
+                  <div style="display: flex; gap: 7px; margin-top: 10px">
+                    <sc-for list="{{ a.fotos }}" as="fo" hint-placeholder-count="3">
+                      <div style="width: 62px; height: 62px; border-radius: 6px; background: #F4F6F8; overflow: hidden; cursor: pointer">
+                        <img src="{{ fo }}" alt="Foto avaliação" style="width: 100%; height: 100%; object-fit: cover" />
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="font-size: 12px; color: #6B7883; font-weight: 700; margin-top: 10px; cursor: pointer">👍 Útil ({{ a.uteis }})</div>
+                </div>
+              </sc-for>
+              <div style="padding-top: 16px">
+                <button style="border: 2px solid #0B5CAD; background: #fff; color: #0B5CAD; font-family: Archivo, sans-serif; font-weight: 800; font-size: 14px; padding: 11px 28px; border-radius: 6px; cursor: pointer" style-hover="background:#0B5CAD;color:#fff">Ver todas as 2.417 avaliações</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="max-width: 1360px; margin: 0 auto; padding: 18px 20px 0">
+    <div style="background: #fff; border: 1px solid #E3E7EA; border-radius: 10px; padding: 16px 18px">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; flex-wrap: wrap">
+        <div style="display: flex; align-items: baseline; gap: 12px">
+          <h2 style="margin: 0; font-size: 19px; font-weight: 900; letter-spacing: -.4px">Produtos relacionados</h2>
+          <span style="font-size: 12.5px; color: #6B7883">Quem viu este item também comprou</span>
+        </div>
+        <div style="display: flex; gap: 6px">
+          <div onClick="{{ relPrev }}" style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid #DDE2E6; display: grid; place-items: center; cursor: pointer; color: #4A5862" style-hover="border-color:#0A8A4B;color:#0A8A4B">‹</div>
+          <div onClick="{{ relNext }}" style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid #DDE2E6; display: grid; place-items: center; cursor: pointer; color: #4A5862" style-hover="border-color:#0A8A4B;color:#0A8A4B">›</div>
+        </div>
+      </div>
+      <div style="overflow: hidden">
+        <div style="display: flex; gap: 11px; transition: transform .45s cubic-bezier(.4,0,.2,1); transform: translateX({{ relShift }})">
+          <sc-for list="{{ relacionados }}" as="r" hint-placeholder-count="8">
+            <div style="flex: 0 0 auto; width: 200px; border: 1px solid #E3E7EA; border-radius: 9px; overflow: hidden; cursor: pointer; transition: all .16s" style-hover="border-color:#0A8A4B;box-shadow:0 6px 18px rgba(16,32,42,.13);transform:translateY(-3px)">
+              <div style="position: relative; aspect-ratio: 1/1; background: #F4F6F8; display: flex; align-items: center; justify-content: center; overflow: hidden">
+                <img src="{{ r.foto }}" alt="{{ r.nome }}" style="width: 100%; height: 100%; object-fit: cover" />
+                <span style="position: absolute; top: 0; left: 0; background: {{ r.badgeBg }}; color: {{ r.badgeFg }}; font-weight: 900; font-size: 12.5px; padding: 4px 8px; border-bottom-right-radius: 8px">-{{ r.desc }}%</span>
+                <sc-if value="{{ r.frete }}" hint-placeholder-val="{{ true }}">
+                  <span style="position: absolute; bottom: 7px; left: 7px; background: #0A8A4B; color: #fff; font-size: 10.5px; font-weight: 800; padding: 3px 7px; border-radius: 3px">Frete grátis</span>
+                </sc-if>
+              </div>
+              <div style="padding: 10px">
+                <div style="font-size: 13px; line-height: 1.32; color: #26333F; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 34px">{{ r.nome }}</div>
+                <div style="font-size: 12px; color: #8A959E; text-decoration: line-through; margin-top: 4px">{{ r.de }}</div>
+                <div style="font-weight: 900; font-size: 21px; color: #E03131; letter-spacing: -.6px; line-height: 1; margin-top: 2px">{{ r.preco }}</div>
+                <div style="display: flex; align-items: center; gap: 5px; margin-top: 6px">
+                  <span style="font-size: 11.5px; color: #F2A50C; letter-spacing: 1px">★★★★★</span>
+                  <span style="font-size: 11px; color: #6B7883; font-weight: 600">{{ r.aval }}</span>
+                </div>
+                <div style="font-size: 11.5px; color: #6B7883; font-weight: 600; margin-top: 7px; padding-top: 7px; border-top: 1px solid #F0F2F4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ r.loja }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #16202A; margin-top: 26px; color: #C3CDD6">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 30px 20px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 28px">
+      <div>
+        <div style="display: flex; align-items: center; gap: 9px">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(150deg, #FFD54A, #F2A50C); display: grid; place-items: center; font-weight: 900; font-size: 16px; color: #0A5C36">CB</div>
+          <div style="font-weight: 900; font-size: 17px; color: #fff">Compras Bras</div>
+        </div>
+        <div style="font-size: 12.5px; line-height: 1.6; margin-top: 12px; max-width: 250px">O marketplace do maior polo de comércio de rua de São Paulo. 340 lojistas, um só carrinho.</div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 800; color: #fff; letter-spacing: 1px; margin-bottom: 11px">INSTITUCIONAL</div>
+        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12.5px">
+          <a href="#" style="color:#C3CDD6">Quem somos</a><a href="#" style="color:#C3CDD6">Central de ajuda</a><a href="#" style="color:#C3CDD6">Trocas e devoluções</a><a href="#" style="color:#C3CDD6">Política de privacidade</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 800; color: #fff; letter-spacing: 1px; margin-bottom: 11px">PARA LOJISTAS</div>
+        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12.5px">
+          <a href="#" style="color:#C3CDD6">Venda no Compras Bras</a><a href="#" style="color:#C3CDD6">Painel do lojista</a><a href="#" style="color:#C3CDD6">Tabela de comissões</a><a href="#" style="color:#C3CDD6">Logística consolidada</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 800; color: #fff; letter-spacing: 1px; margin-bottom: 11px">FORMAS DE PAGAMENTO</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px">
+          <sc-for list="{{ pagamentos }}" as="pg" hint-placeholder-count="6">
+            <div style="background: #fff; color: #16202A; font-size: 10.5px; font-weight: 800; padding: 6px 9px; border-radius: 4px; letter-spacing: .3px">{{ pg }}</div>
+          </sc-for>
+        </div>
+        <div style="font-size: 12px; font-weight: 800; color: #fff; letter-spacing: 1px; margin: 18px 0 10px">REDES SOCIAIS</div>
+        <div style="display: flex; gap: 8px">
+          <sc-for list="{{ redes }}" as="r" hint-placeholder-count="4">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #26333F; color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 800; cursor: pointer" style-hover="background:#0A8A4B">{{ r }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid #26333F">
+      <div style="max-width: 1360px; margin: 0 auto; padding: 14px 20px; font-size: 11.5px; color: #7C8B98; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+        <span>© 2026 Compras Bras Marketplace Ltda. CNPJ 00.000.000/0001-00 · Rua do Polo, 1000 — São Paulo/SP</span>
+        <span>Preços e estoques sujeitos a alteração sem aviso prévio.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Prototype Navigation Bar -->
+<div class="no-scrollbar" style="position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 9999; background: rgba(20, 33, 46, 0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 30px; padding: 6px 10px; display: flex; align-items: center; gap: 6px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); max-width: calc(100vw - 20px); overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch">
+  <div style="font-size: 10px; font-weight: 900; color: #FFD54A; padding: 0 8px; letter-spacing: 0.8px; white-space: nowrap">PROTÓTIPO</div>
+  <a href="./Compras Bras Home.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🏠 Home</a>
+  <a href="./Compras Bras PDP.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #0A8A4B; color: #fff; white-space: nowrap">🛍️ PDP Produto</a>
+  <a href="./Compras Bras Admin Pedidos.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🏢 Admin: Pedidos</a>
+  <a href="./Compras Bras Admin Detalhe Pedido.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">📄 Admin: Detalhe</a>
+  <a href="./Compras Bras Painel Lojista.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🏪 Lojista: Painel</a>
+  <a href="./Compras Bras Lojista Detalhe Pedido.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">📦 Lojista: Detalhe</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440},&quot;ofertasAbertas&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Buy Box&quot;}}">
+class Component extends DCLogic {
+  state = { foto: 0, cor: 0, tam: 1, qtd: 1, aba: 'desc', ofertas: false, rel: 0 };
+
+  renderVals() {
+    const fotos = [
+      './images/vestido_midi.jpg',
+      './images/pdp_vestido_detalhe.jpg',
+      './images/oferta_vestido.jpg',
+      './images/sandalia_rasteira.jpg',
+      './images/brinco_colar.jpg'
+    ];
+    const cores = [
+      ['Verde oliva', '#5F7A4F'], ['Azul marinho', '#20355C'], ['Terracota', '#B4633F'], ['Preto', '#1B1B1B'], ['Off white', '#EDE7DC']
+    ];
+    const tamanhos = [['P', true], ['M', true], ['G', true], ['GG', true], ['XG', false]];
+    const lojaCores = ['#0A8A4B', '#0B5CAD', '#E5A50A', '#C21F1F', '#7A3E9D', '#12704E', '#1877D1'];
+
+    const outras = [
+      ['Moda Bella Brás', '4.7', '3.1 mil vendas', 'Chega ter, 15 set', 'R$ 71,50', 'Frete R$ 12,90', '#6B7883'],
+      ['Vitrine Oriente', '4.9', '9.4 mil vendas', 'Chega qua, 16 set', 'R$ 72,90', 'Frete grátis', '#0A6E3C'],
+      ['Ateliê Santa Ifigênia', '4.5', '870 vendas', 'Chega seg, 14 set', 'R$ 74,00', 'Frete R$ 9,90', '#6B7883'],
+      ['Loja do Vestido SP', '4.8', '5.7 mil vendas', 'Chega sex, 18 set', 'R$ 76,90', 'Frete grátis', '#0A6E3C']
+    ];
+
+    const relRaw = [
+      ['Vestido longo canelado alça larga', '149,90', '79,90', 47, '4.7 (1.109)', 'Casa Rosália', true, './images/oferta_vestido.jpg'],
+      ['Conjunto cropped e saia midi canelado', '169,90', '89,90', 47, '4.8 (642)', 'Moda Bella Brás', true, './images/vestido_midi.jpg'],
+      ['Vestido midi tricot manga longa', '189,90', '99,90', 47, '4.6 (388)', 'Vitrine Oriente', false, './images/pdp_vestido_detalhe.jpg'],
+      ['Cinto fino fivela dourada', '49,90', '19,90', 60, '4.9 (2.204)', 'Doce Laço', false, './images/brinco_colar.jpg'],
+      ['Sandália salto bloco 6cm nude', '159,90', '84,90', 47, '4.5 (731)', 'Passo Certo', true, './images/sandalia_rasteira.jpg'],
+      ['Bolsa baguete couro sintético', '129,90', '64,90', 50, '4.7 (955)', 'Bolsas São Jorge', true, './images/bolsa_transversal.jpg'],
+      ['Blazer alfaiataria oversized', '229,90', '129,90', 44, '4.8 (410)', 'Império Jeans', false, './images/calca_wide_leg.jpg'],
+      ['Vestido midi plissado estampado', '159,90', '84,90', 47, '4.6 (1.877)', 'Loja do Vestido SP', true, './images/oferta_vestido.jpg']
+    ];
+
+    const abas = [
+      ['desc', 'Descrição do produto'], ['specs', 'Especificações'], ['aval', 'Avaliações dos compradores (2.417)']
+    ].map(a => ({
+      label: a[1], go: () => this.setState({ aba: a[0] }),
+      fg: this.state.aba === a[0] ? '#0A6E3C' : '#6B7883',
+      borda: this.state.aba === a[0] ? '#0A8A4B' : 'transparent',
+      bg: this.state.aba === a[0] ? '#EAF7F0' : '#fff'
+    }));
+
+    const avalRaw = [
+      ['Juliana M.', '2 set 2026', 'Casa Rosália', 5, 'M / Verde oliva', 'Tecido bem grosso, não é transparente e o canelado não marca. Comprei o M e ficou justo do jeito que eu queria. A manga bufante é do tamanho da foto, não exagerada.', 2, 38],
+      ['Patrícia R.', '28 ago 2026', 'Vitrine Oriente', 5, 'G / Azul marinho', 'Terceira peça que compro dessa loja. Chegou em três dias em São Paulo, embalado com etiqueta e nota. O azul marinho é fechado, mais escuro que na foto.', 3, 21],
+      ['Camila S.', '21 ago 2026', 'Moda Bella Brás', 4, 'P / Terracota', 'Vestido ótimo pelo preço, só achei o comprimento um pouco maior do que eu esperava — sou 1,58m e ficou no tornozelo. A cor terracota é linda.', 1, 14],
+      ['Rosana A.', '14 ago 2026', 'Casa Rosália', 5, 'GG / Preto', 'Servem bem em manequim 46. Elástico do punho não aperta e o tecido tem boa recuperação depois da lavagem à mão.', 2, 9]
+    ];
+    const stars = n => '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
+
+    const relPer = 4, relMax = Math.max(0, relRaw.length - relPer);
+    const relIdx = Math.min(this.state.rel, relMax);
+
+    const fotosCompradores = [
+      './images/pdp_vestido_detalhe.jpg',
+      './images/vestido_midi.jpg',
+      './images/oferta_vestido.jpg',
+      './images/sandalia_rasteira.jpg',
+      './images/brinco_colar.jpg',
+      './images/pdp_vestido_detalhe.jpg',
+      './images/vestido_midi.jpg',
+      './images/oferta_vestido.jpg'
+    ];
+
+    return {
+      categorias: ['Moda Feminina', 'Moda Masculina', 'Infantil', 'Calçados', 'Bijuterias e Acessórios', 'Bolsas', 'Cama Mesa e Banho', 'Utilidades'],
+      fotoAtiva: fotos[this.state.foto],
+      contadorFoto: (this.state.foto + 1) + ' / ' + fotos.length,
+      miniaturas: fotos.map((f, i) => ({
+        foto: f, n: i + 1, borda: i === this.state.foto ? '#0A8A4B' : 'transparent',
+        go: () => this.setState({ foto: i })
+      })),
+      corAtiva: cores[this.state.cor][0],
+      cores: cores.map((c, i) => ({
+        nome: c[0], swatch: c[1],
+        borda: i === this.state.cor ? '#0A8A4B' : '#DDE2E6',
+        bg: i === this.state.cor ? '#EAF7F0' : '#fff',
+        fg: i === this.state.cor ? '#0A6E3C' : '#4A5862',
+        go: () => this.setState({ cor: i })
+      })),
+      tamAtivo: tamanhos[this.state.tam][0],
+      tamanhos: tamanhos.map((t, i) => ({
+        nome: t[0],
+        borda: !t[1] ? '#EDF0F2' : i === this.state.tam ? '#0A8A4B' : '#DDE2E6',
+        bg: !t[1] ? '#F7F9FA' : i === this.state.tam ? '#0A8A4B' : '#fff',
+        fg: !t[1] ? '#B7C0C7' : i === this.state.tam ? '#fff' : '#26333F',
+        risco: t[1] ? 'none' : 'line-through',
+        cursor: t[1] ? 'pointer' : 'not-allowed',
+        go: t[1] ? () => this.setState({ tam: i }) : () => {}
+      })),
+      ofertaSel: {
+        loja: 'Casa Rosália', ini: 'CR', bg: '#0A8A4B', nota: '4.9',
+        vendas: '12,4 mil vendas', prazo: 'Ter, 15 set — 2 a 4 dias úteis',
+        frete: 'Grátis', estoque: '48 peças no tamanho M'
+      },
+      qtd: this.state.qtd,
+      qtdNota: this.state.qtd >= 6 ? 'preço de atacado aplicado' : 'a partir de 6: R$ 54,90',
+      mais: () => this.setState(s => ({ qtd: Math.min(48, s.qtd + 1) })),
+      menos: () => this.setState(s => ({ qtd: Math.max(1, s.qtd - 1) })),
+      abertoOfertas: this.state.ofertas,
+      labelOfertas: this.state.ofertas ? 'Ocultar as outras 4 ofertas' : 'Ver outras 4 ofertas para este produto',
+      setaOfertas: this.state.ofertas ? '▲' : '▼',
+      toggleOfertas: () => this.setState(s => ({ ofertas: !s.ofertas })),
+      outrasOfertas: outras.map((o, i) => ({
+        loja: o[0], nota: o[1], vendas: o[2], prazo: o[3], preco: o[4], frete: o[5], freteCor: o[6],
+        bg: lojaCores[(i + 1) % lojaCores.length],
+        ini: o[0].split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
+      })),
+      abas,
+      abaDescricao: this.state.aba === 'desc',
+      abaSpecs: this.state.aba === 'specs',
+      abaAvaliacoes: this.state.aba === 'aval',
+      selosDesc: ['Produção nacional — Brás/SP', 'Costura reforçada', 'Não transparente', 'Nota fiscal em toda compra'],
+      destaques: [
+        'Malha canelada com 5% de elastano, boa recuperação',
+        'Manga bufante com punho elástico que não aperta',
+        'Comprimento midi: 112 cm no tamanho M',
+        'Cinco cores lisas e tamanhos P ao GG (XG esgotado)'
+      ],
+      specs: [
+        { k: 'Marca', v: 'Confecção Rosália' }, { k: 'Modelo', v: 'Midi Canelado Bufante' },
+        { k: 'Composição', v: '95% viscose, 5% elastano' }, { k: 'Tipo de malha', v: 'Canelada 5x1' },
+        { k: 'Comprimento (M)', v: '112 cm' }, { k: 'Manga', v: 'Bufante com punho elástico' },
+        { k: 'Decote', v: 'Redondo com ribana' }, { k: 'Forro', v: 'Sem forro' },
+        { k: 'Ocasião', v: 'Casual, trabalho, festa' }, { k: 'Lavagem', v: 'À mão ou ciclo delicado' },
+        { k: 'Origem', v: 'Brasil — São Paulo/SP' }, { k: 'Garantia', v: '90 dias contra defeito de fabricação' }
+      ],
+      distribuicao: [
+        { estrelas: 5, pct: '82%', qtd: '1.982' }, { estrelas: 4, pct: '11%', qtd: '266' },
+        { estrelas: 3, pct: '4%', qtd: '97' }, { estrelas: 2, pct: '2%', qtd: '48' },
+        { estrelas: 1, pct: '1%', qtd: '24' }
+      ],
+      fotosCompradores,
+      tagsAval: ['Tecido bom (412)', 'Veste bem (388)', 'Chegou rápido (301)', 'Bom preço (277)', 'Cor fiel (190)'],
+      avaliacoes: avalRaw.map((a, i) => ({
+        nome: a[0], data: a[1], loja: a[2], estrelas: stars(a[3]), variacao: a[4],
+        texto: a[5], uteis: a[7], ini: a[0][0], bg: lojaCores[i % lojaCores.length],
+        fotos: fotos.slice(0, a[6])
+      })),
+      relacionados: relRaw.map((r, i) => ({
+        nome: r[0], de: 'R$ ' + r[1], preco: 'R$ ' + r[2], desc: r[3], aval: r[4], loja: r[5], frete: r[6],
+        foto: r[7],
+        badgeBg: r[3] >= 50 ? '#E03131' : '#F2A50C',
+        badgeFg: r[3] >= 50 ? '#fff' : '#16202A'
+      })),
+      relShift: (-relIdx * 211) + 'px',
+      relPrev: () => this.setState(s => ({ rel: Math.max(0, s.rel - 1) })),
+      relNext: () => this.setState(s => ({ rel: Math.min(relMax, s.rel + 1) })),
+      pagamentos: ['PIX', 'VISA', 'MASTER', 'ELO', 'HIPERCARD', 'BOLETO'],
+      redes: ['IG', 'FB', 'TT', 'YT']
+    };
+  }
+}
+</script>
+</body>
+</html>

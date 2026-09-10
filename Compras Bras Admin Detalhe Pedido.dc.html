@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #F4F6F8; font-family: Archivo, system-ui, sans-serif; color: #1B2733; -webkit-font-smoothing: antialiased; padding-bottom: 72px; overflow-x: hidden; }
+  a { color: #0B5CAD; text-decoration: none; }
+  a:hover { color: #0A6E3C; }
+  ::-webkit-scrollbar { height: 6px; width: 6px; }
+  ::-webkit-scrollbar-thumb { background: #C7CDD3; border-radius: 8px; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .cb-admin-layout { display: flex; align-items: stretch; min-height: 100vh; background: #F4F6F8; }
+  .cb-admin-sidebar { flex: 0 0 232px; background: #14212E; display: flex; flex-direction: column; position: sticky; top: 0; align-self: flex-start; height: 100vh; z-index: 30; }
+  .cb-admin-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+  .cb-detail-grid { padding: 20px 24px; display: grid; grid-template-columns: minmax(0, 1.85fr) minmax(320px, 1fr); gap: 20px; align-items: start; }
+  .cb-mobile-topbar { display: none; }
+  .cb-desktop-sidebar { display: flex; }
+
+  @media (max-width: 900px) {
+    .cb-admin-layout { flex-direction: column !important; }
+    .cb-desktop-sidebar { display: none !important; }
+    .cb-mobile-topbar { display: flex !important; }
+    .cb-detail-grid { grid-template-columns: 1fr !important; padding: 12px 14px !important; }
+  }
+</style>
+</helmet>
+
+<!-- Mobile Top Bar with Hamburger -->
+<div class="cb-mobile-topbar" style="background: #14212E; padding: 10px 14px; align-items: center; justify-content: space-between; border-bottom: 1px solid #22303F; position: sticky; top: 0; z-index: 50">
+  <div style="display: flex; align-items: center; gap: 10px">
+    <button onClick="{{ toggleMenu }}" style="background: transparent; border: 1px solid #2C3C4D; border-radius: 6px; color: #fff; width: 36px; height: 36px; display: grid; place-items: center; font-size: 18px; cursor: pointer; line-height: 1" aria-label="Abrir menu">
+      ☰
+    </button>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <div style="width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(150deg, #FFD54A, #F2A50C); display: grid; place-items: center; font-weight: 900; font-size: 12px; color: #0A5C36">CB</div>
+      <div>
+        <div style="font-weight: 800; font-size: 13.5px; color: #fff; line-height: 1.1">Compras Bras</div>
+        <div style="font-size: 10px; color: #FFD54A; font-weight: 700">Painel AFECBRAS</div>
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; align-items: center; gap: 8px">
+    <span style="font-size: 10.5px; font-weight: 800; color: #FFD54A; background: #22303F; padding: 3px 8px; border-radius: 12px">ADMIN</span>
+    <div style="width: 30px; height: 30px; border-radius: 50%; background: #0A8A4B; color: #fff; font-weight: 800; font-size: 11px; display: grid; place-items: center">MS</div>
+  </div>
+</div>
+
+<!-- Mobile Drawer Menu Overlay -->
+<sc-if value="{{ menuAberto }}" hint-placeholder-val="{{ false }}">
+  <div style="position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 9998; display: flex" onClick="{{ fecharMenu }}">
+    <div style="width: 280px; max-width: 85vw; background: #14212E; height: 100%; display: flex; flex-direction: column; box-shadow: 4px 0 24px rgba(0,0,0,0.5); z-index: 9999" onClick="event.stopPropagation()">
+      <div style="padding: 16px; border-bottom: 1px solid #22303F; display: flex; align-items: center; justify-content: space-between">
+        <div style="display: flex; align-items: center; gap: 10px">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(150deg, #FFD54A, #F2A50C); display: grid; place-items: center; font-weight: 900; font-size: 14px; color: #0A5C36">CB</div>
+          <div>
+            <div style="font-weight: 800; font-size: 14px; color: #fff">Compras Bras</div>
+            <div style="font-size: 10px; color: #7D8C9B; font-weight: 600">Painel AFECBRAS</div>
+          </div>
+        </div>
+        <button onClick="{{ fecharMenu }}" style="background: transparent; border: 0; color: #A9B6C2; font-size: 20px; cursor: pointer; padding: 4px 8px" aria-label="Fechar menu">✕</button>
+      </div>
+
+      <div style="padding: 12px 10px; display: flex; flex-direction: column; gap: 4px; flex: 1 1 auto; overflow-y: auto">
+        <sc-for list="{{ menu }}" as="m" hint-placeholder-count="7">
+          <a href="{{ m.link }}" style="display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 7px; background: {{ m.bg }}; color: {{ m.fg }}; border-left: 3px solid {{ m.marca }}; text-decoration: none">
+            <span style="width: 20px; font-size: 15px; display: grid; place-items: center">{{ m.icone }}</span>
+            <span style="font-size: 13.5px; font-weight: {{ m.peso }}">{{ m.label }}</span>
+            <sc-if value="{{ m.temBadge }}" hint-placeholder-val="{{ false }}">
+              <span style="margin-left: auto; background: #0A8A4B; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 10px">{{ m.badge }}</span>
+            </sc-if>
+          </a>
+        </sc-for>
+      </div>
+
+      <div style="padding: 14px; border-top: 1px solid #22303F; display: flex; align-items: center; gap: 10px; background: #0E1822">
+        <div style="width: 34px; height: 34px; border-radius: 50%; background: #0A8A4B; color: #fff; font-weight: 800; font-size: 12px; display: grid; place-items: center">MS</div>
+        <div style="line-height: 1.25">
+          <div style="font-size: 12.5px; font-weight: 700; color: #E6EBF0">Marina Souza</div>
+          <div style="font-size: 10.5px; color: #7D8C9B; font-weight: 600">Operações · Admin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<div class="cb-admin-layout">
+
+  <!-- Sidebar Admin (Desktop) -->
+  <div class="cb-admin-sidebar cb-desktop-sidebar">
+    <div style="padding: 14px 18px; border-bottom: 1px solid #22303F; display: flex; align-items: center; gap: 10px">
+      <div style="width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(150deg, #FFD54A, #F2A50C); display: grid; place-items: center; font-weight: 900; font-size: 15px; color: #0A5C36; flex: 0 0 auto">CB</div>
+      <div style="line-height: 1.2; min-width: 0">
+        <div style="font-weight: 800; font-size: 14.5px; color: #fff; white-space: nowrap">Compras Bras</div>
+        <div style="font-size: 10.5px; color: #7D8C9B; font-weight: 600; letter-spacing: .4px; white-space: nowrap">Painel AFECBRAS</div>
+      </div>
+    </div>
+
+    <div class="cb-admin-sidebar-menu no-scrollbar" style="padding: 10px 8px; display: flex; flex-direction: column; gap: 2px; flex: 1 1 auto; overflow-y: auto">
+      <sc-for list="{{ menu }}" as="m" hint-placeholder-count="7">
+        <a href="{{ m.link }}" style="display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 7px; cursor: pointer; background: {{ m.bg }}; color: {{ m.fg }}; border-left: 3px solid {{ m.marca }}; white-space: nowrap; text-decoration: none" style-hover="background:#1E2D3D">
+          <span style="width: 18px; display: grid; place-items: center; flex: 0 0 auto; font-size: 14px">{{ m.icone }}</span>
+          <span style="font-size: 13px; font-weight: {{ m.peso }}; white-space: nowrap">{{ m.label }}</span>
+          <sc-if value="{{ m.temBadge }}" hint-placeholder-val="{{ false }}">
+            <span style="margin-left: auto; background: #E03131; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px">{{ m.badge }}</span>
+          </sc-if>
+        </a>
+      </sc-for>
+    </div>
+
+    <div class="cb-admin-sidebar-profile" style="padding: 14px; border-top: 1px solid #22303F; display: flex; align-items: center; gap: 10px">
+      <div style="width: 32px; height: 32px; border-radius: 50%; background: #0A8A4B; color: #fff; font-weight: 800; font-size: 12px; display: grid; place-items: center; flex: 0 0 auto">MS</div>
+      <div style="line-height: 1.25; min-width: 0">
+        <div style="font-size: 12.5px; font-weight: 700; color: #E6EBF0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Marina Souza</div>
+        <div style="font-size: 10.5px; color: #7D8C9B; font-weight: 600">Operações · Admin</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conteúdo Principal -->
+  <div class="cb-admin-main">
+
+    <!-- Header Topo -->
+    <div style="background: #fff; border-bottom: 1px solid #E1E6EA; padding: 14px 18px">
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #7A8896; margin-bottom: 8px; overflow-x: auto; white-space: nowrap">
+        <a href="./Compras Bras Admin Pedidos.dc.html">Operação</a>
+        <span>›</span>
+        <a href="./Compras Bras Admin Pedidos.dc.html">Pedidos</a>
+        <span>›</span>
+        <span style="color: #1B2733; font-weight: 700">Pedido #CB-482911</span>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+          <a href="./Compras Bras Admin Pedidos.dc.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 6px; border: 1px solid #DFE4E9; background: #F8FAFB; color: #33424F; font-size: 12px; font-weight: 700" style-hover="background:#E1E6EA">
+            ← Voltar
+          </a>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+              <h1 style="margin: 0; font-size: 20px; font-weight: 900; letter-spacing: -.5px">Pedido #CB-482911</h1>
+              <span style="background: #FFF4D1; color: #8A5B00; font-size: 10.5px; font-weight: 900; padding: 3px 8px; border-radius: 4px; letter-spacing: .5px">MULTI-LOJISTA (3 REMESSAS)</span>
+              <span style="background: #EAF7F0; color: #0A6E3C; font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 4px">PAGAMENTO APROVADO</span>
+            </div>
+            <div style="font-size: 12px; color: #5C6B79; margin-top: 3px">Realizado em 10/09/2026 às 09:14 · App Compras Bras</div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; width: 100%; max-width: 480px">
+          <button style="border: 1px solid #DFE4E9; background: #fff; color: #33424F; font-family: Archivo, sans-serif; font-weight: 700; font-size: 12px; padding: 7px 12px; border-radius: 6px; cursor: pointer; flex: 1 1 auto" style-hover="background:#F4F6F8">Imprimir</button>
+          <button style="border: 1px solid #0B5CAD; background: #fff; color: #0B5CAD; font-family: Archivo, sans-serif; font-weight: 700; font-size: 12px; padding: 7px 12px; border-radius: 6px; cursor: pointer; flex: 1 1 auto" style-hover="background:#0B5CAD;color:#fff">Notificar</button>
+          <button style="border: 0; background: #0A8A4B; color: #fff; font-family: Archivo, sans-serif; font-weight: 800; font-size: 12px; padding: 8px 14px; border-radius: 6px; cursor: pointer; flex: 1 1 100%" style-hover="background:#0A6E3C">Gerar todas as etiquetas</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conteúdo com Grid Principal e Lateral -->
+    <div class="cb-detail-grid">
+
+      <!-- Coluna Principal: Remessas Multi-Lojista -->
+      <div style="display: flex; flex-direction: column; gap: 16px">
+
+        <!-- Banner Explicativo Multi-lojista -->
+        <div style="background: linear-gradient(100deg, #FFF9E8, #FFFDF7); border: 1px solid #F5E2A8; border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; gap: 14px">
+          <div style="width: 38px; height: 38px; border-radius: 8px; background: #FFD54A; color: #8A5B00; font-size: 18px; font-weight: 900; display: grid; place-items: center; flex: 0 0 auto">🔀</div>
+          <div>
+            <div style="font-weight: 800; font-size: 13.5px; color: #8A5B00">Pedido com logística consolidada AFECBRAS</div>
+            <div style="font-size: 12.5px; color: #6B5A2E; margin-top: 2px">O cliente realizou uma única compra e um único pagamento. O sistema gerou 3 remessas independentes para cada lojista do polo despachar.</div>
+          </div>
+        </div>
+
+        <!-- Remessas por Lojista -->
+        <sc-for list="{{ remessas }}" as="r" hint-placeholder-count="3">
+          <div style="background: #fff; border: 1px solid #E1E6EA; border-radius: 10px; overflow: hidden">
+            <!-- Header da Remessa -->
+            <div style="padding: 13px 18px; background: #F8FAFB; border-bottom: 1px solid #E1E6EA; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <span style="background: #14212E; color: #fff; font-size: 10.5px; font-weight: 900; padding: 3px 8px; border-radius: 4px">REMESSA {{ r.numero }}</span>
+                <span style="width: 26px; height: 26px; border-radius: 50%; background: {{ r.lojaBg }}; color: #fff; font-size: 10px; font-weight: 900; display: grid; place-items: center">{{ r.lojaIni }}</span>
+                <div>
+                  <span style="font-weight: 800; font-size: 14.5px; color: #16202A">{{ r.loja }}</span>
+                  <span style="font-size: 11.5px; color: #7A8896; margin-left: 6px">{{ r.lojaLocal }}</span>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px">
+                <span style="display: inline-flex; align-items: center; gap: 5px; background: {{ r.statusBg }}; color: {{ r.statusFg }}; font-size: 11.5px; font-weight: 800; padding: 4px 10px; border-radius: 4px">
+                  <span style="width: 6px; height: 6px; border-radius: 50%; background: {{ r.statusFg }}"></span>
+                  {{ r.status }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Produto da Remessa -->
+            <div style="padding: 16px 18px">
+              <div style="display: flex; gap: 14px; align-items: center">
+                <div style="width: 64px; height: 64px; border-radius: 8px; background: #F4F6F8; overflow: hidden; flex: 0 0 auto; border: 1px solid #E1E6EA">
+                  <img src="{{ r.foto }}" alt="{{ r.produto }}" style="width: 100%; height: 100%; object-fit: cover" />
+                </div>
+                <div style="flex: 1 1 auto; min-width: 0">
+                  <div style="font-size: 14px; font-weight: 700; color: #1B2733; line-height: 1.35">{{ r.produto }}</div>
+                  <div style="font-size: 12px; color: #6B7883; margin-top: 3px">Variação: <b>{{ r.variacao }}</b> · Quantidade: <b>{{ r.qtd }}</b></div>
+                  <div style="font-size: 11.5px; color: #7A8896; margin-top: 2px">SKU: {{ r.sku }}</div>
+                </div>
+                <div style="text-align: right; flex: 0 0 auto">
+                  <div style="font-weight: 900; font-size: 16px; color: #16202A">{{ r.valor }}</div>
+                  <div style="font-size: 11px; color: #0A6E3C; font-weight: 700; margin-top: 2px">Repasse lojista: {{ r.repasse }}</div>
+                  <div style="font-size: 10.5px; color: #7A8896">Comissão (10%): {{ r.comissao }}</div>
+                </div>
+              </div>
+
+              <!-- Barra de Progresso da Logística -->
+              <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid #F1F4F6">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px">
+                  <div style="font-size: 12px; font-weight: 700; color: #33424F">Logística: <span style="font-weight: 600; color: #5C6B79">{{ r.logisticaInfo }}</span></div>
+                  <div style="font-size: 11.5px; font-weight: 700; color: {{ r.slaCor }}">{{ r.sla }}</div>
+                </div>
+                <div style="display: flex; gap: 6px">
+                  <sc-for list="{{ r.etapas }}" as="e" hint-placeholder-count="4">
+                    <div style="flex: 1 1 0; min-width: 0">
+                      <div style="height: 6px; border-radius: 3px; background: {{ e.cor }}"></div>
+                      <div style="font-size: 10.5px; font-weight: 700; color: {{ e.fg }}; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ e.label }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+
+              <!-- Ações da Remessa -->
+              <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid #F1F4F6; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap">
+                <div style="font-size: 12px; color: #7A8896">Rastreio: <b style="color:#0B5CAD">{{ r.codigoRastreio }}</b></div>
+                <div style="display: flex; gap: 8px">
+                  <sc-for list="{{ r.acoes }}" as="ac" hint-placeholder-count="2">
+                    <button style="border: 1px solid {{ ac.borda }}; background: {{ ac.bg }}; color: {{ ac.fg }}; font-family: Archivo, sans-serif; font-weight: 700; font-size: 12px; padding: 6px 12px; border-radius: 6px; cursor: pointer" style-hover="filter:brightness(.95)">{{ ac.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- Coluna Lateral: Resumos Financeiro e Cliente -->
+      <div style="display: flex; flex-direction: column; gap: 16px">
+
+        <!-- Card Cliente & Entrega -->
+        <div style="background: #fff; border: 1px solid #E1E6EA; border-radius: 10px; padding: 18px">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px">
+            <div style="font-size: 13px; font-weight: 900; color: #16202A; letter-spacing: .5px">DADOS DO CLIENTE</div>
+            <a href="#" style="font-size: 12px; font-weight: 700">Histórico</a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 11px">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #0B5CAD; color: #fff; font-weight: 900; font-size: 14px; display: grid; place-items: center; flex: 0 0 auto">JM</div>
+            <div>
+              <div style="font-weight: 800; font-size: 14.5px">Juliana Marques</div>
+              <div style="font-size: 12px; color: #6B7883">juliana.marques@email.com · (11) 98765-4321</div>
+            </div>
+          </div>
+          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid #F1F4F6; font-size: 12.5px; line-height: 1.5">
+            <div style="font-weight: 800; color: #7A8896; font-size: 10.5px; letter-spacing: .5px; margin-bottom: 3px">ENDEREÇO DE ENTREGA</div>
+            <div style="color: #1B2733; font-weight: 600">Rua Augusta, 1420 — Apto 82</div>
+            <div style="color: #6B7883">Consolação — São Paulo/SP · CEP 01304-001</div>
+          </div>
+        </div>
+
+        <!-- Card Resumo Financeiro / Split -->
+        <div style="background: #fff; border: 1px solid #E1E6EA; border-radius: 10px; padding: 18px">
+          <div style="font-size: 13px; font-weight: 900; color: #16202A; letter-spacing: .5px; margin-bottom: 14px">SPLIT DE PAGAMENTO & REPASSE</div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px">
+            <div style="display: flex; justify-content: space-between; color: #5C6B79">
+              <span>Subtotal dos produtos (4 peças)</span>
+              <span style="font-weight: 700; color: #1B2733">R$ 284,60</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; color: #5C6B79">
+              <span>Frete consolidado (3 lojas)</span>
+              <span style="font-weight: 700; color: #0A6E3C">Grátis (R$ 0,00)</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; color: #5C6B79">
+              <span>Cupom de desconto aplicado</span>
+              <span style="font-weight: 700; color: #7A8896">Nenhum</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-top: 8px; margin-top: 4px; border-top: 1px solid #E1E6EA; font-size: 15px; font-weight: 900">
+              <span>Total pago pelo cliente</span>
+              <span style="color: #0B5CAD">R$ 284,60</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 16px; background: #F8FAFB; border-radius: 8px; padding: 12px 14px; border: 1px solid #E1E6EA">
+            <div style="font-size: 11px; font-weight: 800; color: #7A8896; letter-spacing: .5px; margin-bottom: 8px">DIVISÃO DO REPASSE</div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px">
+              <span>Total para Lojistas (90%)</span>
+              <b style="color:#0A6E3C">R$ 256,14</b>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px">
+              <span>Comissão AFECBRAS (10%)</span>
+              <b style="color:#B8860B">R$ 28,46</b>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px; padding-top: 6px; border-top: 1px solid #E1E6EA">
+              <span>Data prevista de liquidação</span>
+              <b>17/09/2026</b>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Timeline da Operação -->
+        <div style="background: #fff; border: 1px solid #E1E6EA; border-radius: 10px; padding: 18px">
+          <div style="font-size: 13px; font-weight: 900; color: #16202A; letter-spacing: .5px; margin-bottom: 12px">HISTÓRICO DE EVENTOS</div>
+          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 12px">
+            <div style="display: flex; gap: 10px">
+              <span style="color: #0A8A4B; font-weight: 900">●</span>
+              <div>
+                <div style="font-weight: 700">Casa Rosália postou a remessa 1/3</div>
+                <div style="font-size: 11px; color: #8A97A3">10 set 2026, 11:40 · Correios BR8827701SP</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px">
+              <span style="color: #0B5CAD; font-weight: 900">●</span>
+              <div>
+                <div style="font-weight: 700">Doce Laço iniciou a separação da remessa 2/3</div>
+                <div style="font-size: 11px; color: #8A97A3">10 set 2026, 10:15</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px">
+              <span style="color: #0A8A4B; font-weight: 900">●</span>
+              <div>
+                <div style="font-weight: 700">Pagamento aprovado via PIX</div>
+                <div style="font-size: 11px; color: #8A97A3">10 set 2026, 09:14</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Prototype Navigation Bar -->
+<div class="no-scrollbar" style="position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 9999; background: rgba(20, 33, 46, 0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 30px; padding: 6px 10px; display: flex; align-items: center; gap: 6px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); max-width: calc(100vw - 20px); overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch">
+  <div style="font-size: 10px; font-weight: 900; color: #FFD54A; padding: 0 8px; letter-spacing: 0.8px; white-space: nowrap">PROTÓTIPO</div>
+  <a href="./Compras Bras Home.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🏠 Home</a>
+  <a href="./Compras Bras PDP.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🛍️ PDP Produto</a>
+  <a href="./Compras Bras Admin Pedidos.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🏢 Admin: Pedidos</a>
+  <a href="./Compras Bras Admin Detalhe Pedido.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #0A8A4B; color: #fff; white-space: nowrap">📄 Admin: Detalhe</a>
+  <a href="./Compras Bras Painel Lojista.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">🏪 Lojista: Painel</a>
+  <a href="./Compras Bras Lojista Detalhe Pedido.dc.html" style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.75); white-space: nowrap" style-hover="background:rgba(255,255,255,0.12);color:#fff">📦 Lojista: Detalhe</a>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+class Component extends DCLogic {
+  state = { menuAberto: false };
+
+  renderVals() {
+    const menuRaw = [
+      ['Dashboard', '▤', './Compras Bras Admin Pedidos.dc.html'],
+      ['Pedidos', '⬒', './Compras Bras Admin Pedidos.dc.html'],
+      ['Lojistas', '⌂', '#'],
+      ['Produtos', '▦', '#'],
+      ['Financeiro / Split', '₪', '#'],
+      ['Relatórios', '◫', '#'],
+      ['Configurações', '⚙', '#']
+    ];
+    const badges = { 'Pedidos': '412', 'Lojistas': '6' };
+
+    const etapa = (feitas, total) => ['Confirmado', 'Separado', 'Etiqueta', 'Despachado'].slice(0, total).map((l, i) => ({
+      label: l,
+      cor: i < feitas ? '#0A8A4B' : '#E1E6EA',
+      fg: i < feitas ? '#0A6E3C' : '#6B7883'
+    }));
+
+    const remessas = [
+      {
+        numero: '1/3', loja: 'Casa Rosália', lojaIni: 'CR', lojaBg: '#0A8A4B', lojaLocal: 'Rua Oriente, 412 · Loja #114',
+        produto: 'Vestido midi canelado manga bufante — cores lisas', variacao: 'Tam. M / Verde oliva', sku: 'VMC-M-OLV', qtd: '1 un',
+        valor: 'R$ 69,90', repasse: 'R$ 62,91', comissao: 'R$ 6,99',
+        status: 'Despachado', statusBg: '#EAF7F0', statusFg: '#0A6E3C',
+        foto: './images/vestido_midi.jpg',
+        logisticaInfo: 'Correios SEDEX · Coletado em 10/09 às 11:40',
+        codigoRastreio: 'BR8827701SP',
+        sla: 'Dentro do prazo', slaCor: '#0A6E3C',
+        etapas: etapa(4, 4),
+        acoes: [{ label: 'Rastrear pacote', borda: '#DFE4E9', bg: '#fff', fg: '#33424F' }, { label: 'Ver etiqueta', borda: '#DFE4E9', bg: '#fff', fg: '#33424F' }]
+      },
+      {
+        numero: '2/3', loja: 'Doce Laço', lojaIni: 'DL', lojaBg: '#B8860B', lojaLocal: 'Rua Miller, 89 · Loja #42',
+        produto: 'Conjunto brinco e colar banho ouro 18k folheado', variacao: 'Dourado', sku: 'CJB-OUR-18K', qtd: '2 un',
+        valor: 'R$ 79,80', repasse: 'R$ 71,82', comissao: 'R$ 7,98',
+        status: 'Em separação', statusBg: '#E7F0FA', statusFg: '#0B5CAD',
+        foto: './images/brinco_colar.jpg',
+        logisticaInfo: 'Loggi Express · Coleta agendada hoje às 16:00',
+        codigoRastreio: 'LOG-774921BR',
+        sla: 'Coleta em 4h45', slaCor: '#0B5CAD',
+        etapas: etapa(2, 4),
+        acoes: [{ label: 'Gerar etiqueta', borda: '#0A8A4B', bg: '#0A8A4B', fg: '#fff' }, { label: 'Notificar loja', borda: '#DFE4E9', bg: '#fff', fg: '#33424F' }]
+      },
+      {
+        numero: '3/3', loja: 'Passo Certo', lojaIni: 'PC', lojaBg: '#C21F1F', lojaLocal: 'Rua Maria Marcolina, 210 · Loja #08',
+        produto: 'Sandália rasteira trançada tiras finas', variacao: 'Tam. 37 / Nude', sku: 'SDR-37-NUD', qtd: '1 un',
+        valor: 'R$ 134,90', repasse: 'R$ 121,41', comissao: 'R$ 13,49',
+        status: 'Aguardando separação', statusBg: '#FFF4D1', statusFg: '#8A5B00',
+        foto: './images/sandalia_rasteira.jpg',
+        logisticaInfo: 'Coleta ponto consolidado AFECBRAS',
+        codigoRastreio: 'Pendente de etiqueta',
+        sla: 'SLA vence em 2h15', slaCor: '#C21F1F',
+        etapas: etapa(1, 4),
+        acoes: [{ label: 'Cobrar lojista', borda: '#F2A50C', bg: '#FFF4D1', fg: '#8A5B00' }, { label: 'Reatribuir estoque', borda: '#DFE4E9', bg: '#fff', fg: '#33424F' }]
+      }
+    ];
+
+    return {
+      menuAberto: this.state.menuAberto,
+      toggleMenu: () => this.setState(s => ({ menuAberto: !s.menuAberto })),
+      fecharMenu: () => this.setState({ menuAberto: false }),
+      menu: menuRaw.map(m => ({
+        label: m[0], icone: m[1], link: m[2],
+        bg: m[0] === 'Pedidos' ? '#1E2D3D' : 'transparent',
+        fg: m[0] === 'Pedidos' ? '#fff' : '#A9B6C2',
+        marca: m[0] === 'Pedidos' ? '#0A8A4B' : 'transparent',
+        peso: m[0] === 'Pedidos' ? 800 : 600,
+        temBadge: !!badges[m[0]], badge: badges[m[0]] || ''
+      })),
+      remessas
+    };
+  }
+}
+</script>
+</body>
+</html>
