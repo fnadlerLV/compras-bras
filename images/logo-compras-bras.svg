@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 52" fill="none" style="display: block; max-height: 48px; width: auto">
+  <defs>
+    <!-- Gradiente da Sacola / Varejo Popular Vibrante -->
+    <linearGradient id="cbGradBag" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE600" />
+      <stop offset="45%" stop-color="#FF9900" />
+      <stop offset="100%" stop-color="#FF5500" />
+    </linearGradient>
+    <linearGradient id="cbGradHandle" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFF275" />
+      <stop offset="100%" stop-color="#FFA800" />
+    </linearGradient>
+    <filter id="cbShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Grupo do Ícone: Sacola de Compras Dinâmica + Tag de Oferta / Sorriso Varejo -->
+  <g transform="translate(2, 2)">
+    <!-- Brilho / Sparkle Superior -->
+    <path d="M37 4L38.5 7.5L42 9L38.5 10.5L37 14L35.5 10.5L32 9L35.5 7.5Z" fill="#FFE600" />
+    
+    <!-- Alça da Sacola -->
+    <path d="M14 17V11C14 6.58 17.58 3 22 3C26.42 3 30 6.58 30 11V17" 
+          fill="none" stroke="url(#cbGradHandle)" stroke-width="3.5" stroke-linecap="round" />
+    
+    <!-- Corpo da Sacola com perspectiva dinâmica -->
+    <rect x="5" y="14" width="34" height="32" rx="7" fill="url(#cbGradBag)" filter="url(#cbShadow)" />
+    
+    <!-- Dobra / Aba superior da sacola -->
+    <path d="M5 20C9 21.5 35 21.5 39 20" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-linecap="round" />
+    
+    <!-- Elemento interno: Sorriso de Entrega / Desconto com detalhe 'B' do Brás estilizado -->
+    <path d="M13 28C16.5 34 27.5 34 31 28" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+    <circle cx="28" cy="24" r="2" fill="#FFFFFF" />
+    <circle cx="16" cy="24" r="2" fill="#FFFFFF" />
+    
+    <!-- Tag / Selo '%' relâmpago de atacado/varejo no canto -->
+    <rect x="25" y="32" width="16" height="13" rx="3.5" fill="#FFFFFF" filter="url(#cbShadow)" />
+    <text x="33" y="42" font-family="'Archivo', 'Impact', sans-serif" font-weight="900" font-size="10" fill="#E64A19" text-anchor="middle">⚡%</text>
+  </g>
+
+  <!-- Lettering: COMPRAS BRÁS -->
+  <!-- 'Compras' -->
+  <text x="50" y="27" font-family="'Archivo', -apple-system, sans-serif" font-weight="900" font-size="22" fill="#FFFFFF" letter-spacing="-0.3">
+    Compras
+  </text>
+  <!-- 'Brás' em destaque amarelo dourado -->
+  <text x="144" y="27" font-family="'Archivo', -apple-system, sans-serif" font-weight="900" font-size="22" fill="#FFD54A" letter-spacing="-0.3">
+    Brás
+  </text>
+
+  <!-- Tagline: MARKETPLACE DO POLO com Badge Estilizado -->
+  <g transform="translate(50, 34)">
+    <rect x="0" y="0" width="164" height="14" rx="3.5" fill="rgba(0, 0, 0, 0.22)" />
+    <path d="M6 7L7 5L9 6L7 8Z" fill="#FFD54A" />
+    <text x="13" y="10.5" font-family="'Archivo', sans-serif" font-weight="800" font-size="8.5" fill="#FFE08A" letter-spacing="1.1">
+      MARKETPLACE DO POLO
+    </text>
+    <circle cx="154" cy="7" r="2" fill="#00E676" />
+  </g>
+</svg>
